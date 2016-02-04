@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue demo</title>
+	<style>
+		.completed {
+			text-decoration: line-through;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="newTodo" v-on:keyup.enter="addTodo()">
+		<ul>
+			<li v-for="todo in todos">
+				<input type="checkbox" v-model="todo.completed">
+				<span v-bind:class="{'completed': todo.completed}">{{todo.title}}</span>
+				<input type="button" value="x" v-on:click="removeTodo(todo)">
+			</li>
+		</ul>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				newTodo: '',
+				todos: [{
+					title: '吃饭',
+					completed: false
+				}]
+			},
+			methods: {
+				addTodo: function() {
+					var todo = this.newTodo.trim();
+					if(todo){
+						this.todos.push({
+							title: todo,
+							completed: false
+						})
+						this.newTodo = '';
+					}
+				},
+				removeTodo: function(todo) {
+					this.todos.splice(this.todos.indexOf(todo), 1);
+				}
+			}
+		})
+	</script>
+</body>
+</html>
